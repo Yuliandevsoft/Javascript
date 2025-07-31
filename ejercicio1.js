@@ -5,14 +5,15 @@
 
 let edad = prompt("Por favor, ingresa tu edad:");
 
-if(edad >= 18){
+// if(edad >= 18){
 
-    console.log('Eres mayor de edad')
-}
-else{
-    console.log('Eres menor de edad')
-}
+//     console.log('Eres mayor de edad')
+// }
+// else{
+//     console.log('Eres menor de edad')
+// }
 
+edad >= 18 ? "Eres mayor de edad": "Eres menor de edad"
     
 
 
