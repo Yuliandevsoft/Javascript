@@ -17,62 +17,84 @@
 // aleatoriamente», debe aparecer un nombre resaltado en la lista con el mensaje indicando
 // que ha sido seleccionado aleatoriamente.
 
+// const inputName = document.getElementById('inputName');
+// const addBtn = document.getElementById('addBtn');
+// const randomBtn = document.getElementById('randomBtn');
+// const nameList = document.getElementById('nameList');
+
 const names = [];
-const inputName = document.getElementById('inputName');
-const addBtn = document.getElementById('addBtn');
-const randomBtn = document.getElementById('randomBtn');
-const nameList = document.getElementById('nameList');
+const contador = {};
+
+const input = document.getElementById("inputName");
+const boton = document.getElementById("addBtn");
 
 function renderList() {
-  nameList.innerHTML = '';
+  nameList.innerHTML = "";
   for (const name of names) {
-    const li = document.createElement('li');
+    const li = document.createElement("li");
     li.textContent = name;
     nameList.appendChild(li);
   }
 }
 
-function addName(){
-const name = inputName.value;
-if (name){
-  names.push(name);
-  inputName.value = '';
-  renderList();
+function addName() {
+  const name = inputName.value;
+  if (name) {
+    names.push(name);
+    inputName.value = "";
+    renderList();
   }
 }
 
-// addBtn.addEventListener('click', () => {
-//   const name = inputName.value;
-//   if (name) {
-//     names.push(name);
-//     inputName.value = '';
-//     renderList();
-//   }
-// });
-
 function aleatorio() {
-  if (names.length === 0) return;
-  let namecontador = 0
+  //if (names.length === 0) return;
+  //const randomIndex = Math.floor(Math.random() * names.length);
+  
+  const array = new Uint32Array(1);
+  window.crypto.getRandomValues(array);
+  const randomIndex = array[0] % names.length;
 
-  const randomIndex = Math.floor(Math.random() * names.length);
+  let selectedName = names[randomIndex];
+  if (contador[selectedName]) {
+    contador[selectedName]++;
+  } else {
+    contador[selectedName] = 1;
+  }
 
-  nameList.innerHTML = '';
+  nameList.innerHTML = "";
 
   names.forEach((name, index) => {
-    const li = document.createElement('li');
+    const li = document.createElement("li");
     if (index === randomIndex) {
-      li.textContent = `${name} - se ha elegido: ${name}, cantidad: ${namecontador+1}`;
-      li.classList.add('selected'); 
+      li.textContent = `${name} - se ha elegido: ${contador[name]} veces`;
+      li.classList.add("selected");
     } else {
-      li.textContent = name;
+      if (!contador[name]) {
+        li.textContent = name;
+      } else {
+        li.textContent = name + " - Seleccionado: " + contador[name];
+      }
     }
     nameList.appendChild(li);
   });
 }
 
-//para que sea mas interesante ponle un id a los elementos
-//quita el onclick de html y hazlo desde aca del javascript
 
+addBtn.onclick = addName;
+randomBtn.onclick = aleatorio;
+
+//quita el onclick de html y hazlo desde aca desde el javascript el llamado (listo)
+//arregla el contador para que funcione (listo)
+// que al presionar enter funcione la tecla al agregar
+
+// addBtn.addEventListener('click', () => {
+//   const name = inputName.value;
+//   if (name) {
+//     names.push(name);s
+//     inputName.value = '';
+//     renderList();
+//   }
+// });
 
 // randomBtn.addEventListener('click', () => {
 //   if (names.length === 0) return;
@@ -89,4 +111,3 @@ function aleatorio() {
 //     nameList.appendChild(li);
 //   });
 // });
-
