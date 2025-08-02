@@ -19,14 +19,15 @@
 
 // const inputName = document.getElementById('inputName');
 // const addBtn = document.getElementById('addBtn');
-// const randomBtn = document.getElementById('randomBtn');
-// const nameList = document.getElementById('nameList');
 
 const names = [];
 const contador = {};
 
 const input = document.getElementById("inputName");
 const boton = document.getElementById("addBtn");
+const randomBtn = document.getElementById('randomBtn');
+const nameList = document.getElementById('nameList');
+
 
 function renderList() {
   nameList.innerHTML = "";
@@ -47,7 +48,7 @@ function addName() {
 }
 
 function aleatorio() {
-  //if (names.length === 0) return;
+  if (names.length === 0) return;
   //const randomIndex = Math.floor(Math.random() * names.length);
   
   const array = new Uint32Array(1);
@@ -79,6 +80,11 @@ function aleatorio() {
   });
 }
 
+input.addEventListener("keydown", function(event) {
+  if (event.key === "Enter") {
+    addName();
+  }
+});
 
 addBtn.onclick = addName;
 randomBtn.onclick = aleatorio;
